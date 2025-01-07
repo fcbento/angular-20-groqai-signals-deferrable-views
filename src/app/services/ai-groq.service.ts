@@ -1,12 +1,30 @@
-import { Injectable } from '@angular/core';
-import Groq from "groq-sdk";
-import { APIPromise } from 'groq-sdk/core.mjs';
-import { defer, Observable } from 'rxjs';
-import { environment } from '../environments/environment.development';
-import { ChatCompletionMessage } from 'groq-sdk/resources/chat/completions.mjs';
 
-const groq = new Groq({ 
-  apiKey: environment.apiKey, 
+/**
+ * This service interacts with the Groq SDK to create chat completions.
+ * 
+ * @author Felipe C. Bento
+ * @version 0.0.1
+ * @see ChatCompletionService
+ * @see https://console.groq.com/docs/quickstart
+ * @public
+*/
+
+import { Injectable, inject } from '@angular/core';
+import Groq from "groq-sdk";
+import { defer, Observable } from 'rxjs';
+import { environment } from '../../environments/environment.development';
+import { ChatCompletionMessage } from 'groq-sdk/resources/chat/completions.mjs';
+import { ChatCompletionService } from './chat-completion.service';
+
+/**
+ * Provides methods to interact with the Groq SDK.
+ * 
+ * @param apiKey - API key to authenticate with the Groq service.
+ * @param dangerouslyAllowBrowser - Allows the Groq SDK to run in the browser.
+ * @see https://groq.com/
+ */
+const groq = new Groq({
+  apiKey: environment.apiKey,
   dangerouslyAllowBrowser: environment.dangerouslyAllowBrowser
 });
 
@@ -16,7 +34,10 @@ const groq = new Groq({
 
 export class AiGroqService {
 
-  constructor() { }
+  /**
+   * Injects the chat completion service to set the chat completion state.
+  */
+  private signalService = inject(ChatCompletionService)
 
   /**
    * Sends a user input to the Groq service and retrieves a promise with the response containing the message to be displayed.
@@ -28,8 +49,8 @@ export class AiGroqService {
    * @param content - The input string to be processed by the Groq service.
    * @returns A promise containing the chat completion result from the Groq service.
   */
-   private getGroqChatCompletion(content: string): APIPromise<Groq.Chat.Completions.ChatCompletion> {
-    return groq.chat.completions.create({
+  private async getGroqChatCompletion(content: string): Promise<Groq.Chat.Completions.ChatCompletion> {
+    const chatCompletion = await groq.chat.completions.create({
       messages: [
         {
           role: environment.role as ChatCompletionMessage['role'],
@@ -38,6 +59,10 @@ export class AiGroqService {
       ],
       model: environment.model,
     })
+
+    this.signalService.setChatCompletionState(chatCompletion)
+
+    return chatCompletion
   }
 
   /** 

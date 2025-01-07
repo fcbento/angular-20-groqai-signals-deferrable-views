@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { AiGroqService } from './ai-groq.service';
 import { defer } from 'rxjs';
 import { ChatCompletion } from 'groq-sdk/resources/chat/completions.mjs';
-import { environment } from '../environments/environment.development';
+import { environment } from '../../environments/environment.development';
 
 describe('AiGroqService', () => {
   let service: AiGroqService;
