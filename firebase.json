@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "7c843",
-    "public": "dist/angular-19-openai-playground",
+    "public": "dist/angular-19-openai-playground/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
