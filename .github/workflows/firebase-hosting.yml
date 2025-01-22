@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+    - task/*
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'test'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'test scenarios'  
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "Teste level: ${{ github.event.inputs.logLevel }}"
+        echo "Test scenarios: ${{ github.event.inputs.tags }}" 
+  firebase-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '20.x'
+    - run: node environments.replace.js
+      env:
+        FIREBASE_DETAILS: ${{ secrets.FIREBASE_DETAILS }}
+    - run: npm install --force
+    - run: npm run test
+    - run: npm run build
+    - uses: w9jds/firebase-action@v12.9.0
+      with:
+        args: deploy --only hosting:7c843
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_AI_CHAT_7C843 }}
