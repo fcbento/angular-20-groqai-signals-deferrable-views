@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "ai-chat-7c843"
-  }
+  },
+  "targets": {
+    "ai-chat-7c843": {
+      "hosting": {
+        "7c843": [
+          "ai-chat-7c843"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
