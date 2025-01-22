@@ -25,7 +25,7 @@ import { ChatCompletionService } from './chat-completion.service';
  */
 const groq = new Groq({
   apiKey: environment.groq.apiKey,
-  dangerouslyAllowBrowser: environment.groq.dangerouslyAllowBrowser
+  dangerouslyAllowBrowser: true
 });
 
 @Injectable({
