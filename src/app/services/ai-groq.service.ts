@@ -24,8 +24,8 @@ import { ChatCompletionService } from './chat-completion.service';
  * @see https://groq.com/
  */
 const groq = new Groq({
-  apiKey: environment.apiKey,
-  dangerouslyAllowBrowser: environment.dangerouslyAllowBrowser
+  apiKey: environment.groq.apiKey,
+  dangerouslyAllowBrowser: environment.groq.dangerouslyAllowBrowser
 });
 
 @Injectable({
@@ -53,11 +53,11 @@ export class AiGroqService {
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         {
-          role: environment.role as ChatCompletionMessage['role'],
+          role: environment.groq.role as ChatCompletionMessage['role'],
           content,
         },
       ],
-      model: environment.model,
+      model: environment.groq.model,
     })
 
     this.signalService.setChatCompletionState(chatCompletion)
