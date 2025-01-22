@@ -11,7 +11,7 @@ describe('AiGroqService', () => {
     id: 'test-id',
     object: 'chat.completion',
     created: Date.now(),
-    model: environment.model,
+    model: environment.groq.model,
     choices: [
       {
         message: {
