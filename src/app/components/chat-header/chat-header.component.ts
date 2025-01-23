@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   templateUrl: './chat-header.component.html'
 })
 export class ChatHeaderComponent {
+  
+  resetChat(): void {
+    console.log('resetChat')
+  }
 
 }
