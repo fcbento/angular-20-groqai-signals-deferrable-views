@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output,  } from '@angular/core';
-import { FormsModule,  } from '@angular/forms';
+import { Component, EventEmitter, Output, } from '@angular/core';
+import { FormsModule, } from '@angular/forms';
 
 @Component({
   selector: 'app-chat-input',
@@ -14,7 +14,9 @@ export class ChatInputComponent {
   message = '';
 
   public sendMessage(): void {
-    this.userInputMessage.emit(this.message);
-    this.message = '';
+    if (this.message) {
+      this.userInputMessage.emit(this.message);
+      this.message = '';
+    }
   }
 }
