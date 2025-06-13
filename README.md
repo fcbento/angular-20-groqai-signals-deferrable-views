@@ -1,59 +1,93 @@
-# Angular19OpenaiPlayground
+# Integration with GroqAI - Angular 20 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+A chat application built using Angular 20. It works like any AI chat, allowing users to chat in real time with an AI. The application is connected to GroqAI, an AI service that understands and generates natural language, providing quick responses to user messages. This project was created to practce some of the new Angular features and understand a bit how AI services provide messages to the client.
 
-## Development server
+## Live preview
 
-To start a local development server, run:
+https://ai-chat-7c843.web.app/
 
-```bash
-ng serve
-```
+## Prerequisites
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Requirements for running the app locally
+- [Node](https://nodejs.org/)
+- [Npm](https://www.npmjs.com/)
 
-## Code scaffolding
+## How to use
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**Required**: A Groq apiKey to fill the groq object in **environments.ts**
 
-```bash
-ng generate component component-name
-```
+https://console.groq.com/
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Example: 
 
 ```bash
-ng generate --help
+  groq: {
+    apiKey: 'YOUR_API_KEY',
+    dangerouslyAllowBrowser: true,
+    model: 'llama-3.3-70b-versatile',
+    role: 'user'
+  }
 ```
-
-## Building
-
-To build the project run:
 
 ```bash
-ng build
+# Clone this repository
+$ git clone https://github.com/fcbento/angular-20-groqai-signals-deferrable-views.git
+
+# Go into the repository
+$ cd angular-20-groqai-signals-deferrable-views
+
+# Install dependencies
+$ npm install
+
+# Run the app
+$ ng serve
+
+# Unit tests
+$ npm run test
+
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## How It Works
 
-## Running unit tests
+- User enters a message in the chat input.
+- The message is emitted and added to the chat history.
+- The AI service is called for a response.
+- The AI's response is added to the chat history.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## CI / CD
 
-```bash
-ng test
-```
+This project uses **GitHub Actions** for continuous deployment to **Firebase Hosting**. Whenever changes are pushed to the main branch, a GitHub Actions workflow automatically builds and deploys the latest version to Firebase. Also runs unit tests on every push and pull request. Check folder: **.github/workflows**
 
-## Running end-to-end tests
+<img alt="example" width="800" src="cicd.png">
+<img alt="example" width="800" src="deploy.png">
 
-For end-to-end (e2e) testing, run:
+## Tests Coverage
 
-```bash
-ng e2e
-```
+<img alt="example" width="800" src="coverage.png">
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Chat input message
 
-## Additional Resources
+<img alt="example" width="800" src="chat.png">
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## TODO
+
+- [ ] Enhance UI
+- [ ] Delay incoming messages from the server
+
+## Built With
+
+This was created with the following tech stack.
+
+[![My Skills](https://skillicons.dev/icons?i=angular,rxjs,firebase,typescript,vscode,windows,githubactions&perline=10)](https://skillicons.dev)
+
+## Top contributors
+
+<a href="https://github.com/fcbento/angular-20-groqai-signals-deferrable-views/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fcbento/angular-20-groqai-signals-deferrable-views" alt="contrib.rocks image"/>
+</a>
+
+## Contact
+
+[![linkedin](https://skillicons.dev/icons?i=linkedin)](https://linkedin.com/in/felipe-bento)
+[![discord](https://skillicons.dev/icons?i=discord)](https://discordapp.com/users/413141379074490369)
+[![gmail](https://skillicons.dev/icons?i=gmail)](mailto:felipe.16costa@gmail.com)
