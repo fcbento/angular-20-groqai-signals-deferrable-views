@@ -26,7 +26,7 @@ jobs:
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
       with:
-        node-version: '18.x'
+        node-version: '20.x'
     - run: node environments.replace.js
       env:
         FIREBASE_DETAILS: ${{ secrets.FIREBASE_DETAILS }}
