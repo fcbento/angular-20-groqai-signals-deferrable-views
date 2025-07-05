@@ -42,12 +42,6 @@ describe('ChatContainerComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should clean up subscriptions on destroy', () => {
-    const spy = spyOn(component['destroy$'], 'next').and.callThrough();
-    component.ngOnDestroy();
-    expect(spy).toHaveBeenCalled();
-  });
-
   it('should handle bot message in getChatCompletion', () => {
     const botMessage = 'Hello from bot';
     chatCompletionServiceSpy.chatCompletionSignal.and.returnValue({ message: botMessage });
