@@ -1,10 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ChatInputComponent } from '../chat-input/chat-input.component';
 import { AiGroqService } from '../../services/ai-groq.service';
 import { ChatCompletionService } from '../../services/chat-completion.service';
-import { Subject, takeUntil } from 'rxjs';
+import { takeUntil } from 'rxjs';
 import { ChatMessagesComponent } from '../chat-messages/chat-messages.component';
 import { ChatHeaderComponent } from '../chat-header/chat-header.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-chat-container',
@@ -15,11 +16,11 @@ import { ChatHeaderComponent } from '../chat-header/chat-header.component';
   ],
   templateUrl: './chat-container.component.html'
 })
-export class ChatContainerComponent implements OnInit, OnDestroy {
+export class ChatContainerComponent implements OnInit {
 
   private groqService = inject(AiGroqService);
   private chatCompletionService = inject(ChatCompletionService);
-  private destroy$ = new Subject<void>();
+  private destroy = inject(DestroyRef);
 
   public botMessage: string = '';
   public messages: any[] = [];
@@ -28,14 +29,9 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
     this.getChatCompletion();
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
   public getChatCompletion(): void {
     this.groqService.getResponse('hi')
-    .pipe(takeUntil(this.destroy$))
+    .pipe(takeUntilDestroyed(this.destroy))
     .subscribe({
       next: () => {
         this.botMessage = this.chatCompletionService.chatCompletionSignal()?.message;
@@ -47,7 +43,7 @@ export class ChatContainerComponent implements OnInit, OnDestroy {
   public getUserInputMessage(message: string): void {
     this.setMessagesArray(message, 'user');
     this.groqService.getResponse(message)
-    .pipe(takeUntil(this.destroy$))
+    .pipe(takeUntilDestroyed(this.destroy))
     .subscribe({
       next: () => {
         this.setMessagesArray(this.chatCompletionService.chatCompletionSignal()?.message, 'bot');
